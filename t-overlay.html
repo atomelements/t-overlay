@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html" />
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html" />
+<link rel="import" href="../iron-dropdown/iron-dropdown-scroll-manager.html">
 <link rel="import" href="../t-button/t-button.html" />
 <link rel="import" href="../t-header/t-header.html" />
 
@@ -12,7 +13,7 @@
 	        bottom: 0;
 	        left: 0;
 	        right: 0;
-	        z-index: 10;
+	        z-index: 99;
 	        background: #fff;
 	        -webkit-tap-highlight-color: transparent;
 	        display: none;
@@ -67,7 +68,8 @@
 			active:{
 				type:Boolean,
 				value:false,
-				reflectToAttribute:true
+				reflectToAttribute:true,
+				observer:'_handlePageScroll'
 			},
 
 			/**
@@ -92,7 +94,15 @@
 		_cancelClick:function(){
 			this.closeModal();
 			this.fire('click-cancel');
-		}
+		},
+
+		_handlePageScroll:function(){
+			if(!this.active){
+            	Polymer.IronDropdownScrollManager.removeScrollLock(this);
+			}else{
+                Polymer.IronDropdownScrollManager.pushScrollLock(this);
+			}
+		}	
 
 	});	
 </script>
