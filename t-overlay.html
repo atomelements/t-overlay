@@ -90,6 +90,7 @@
 
 		closeModal:function(){
 			this.active = false;
+			this.fire('t-overlay-closed');
 		},
 
 		_okClick:function(){
